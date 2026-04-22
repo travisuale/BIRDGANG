@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Timpview Spring Ball Schedule</title>
+    <meta
+      name="description"
+      content="Spring ball schedule and practice detail app for Timpview coaches."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css?v=2026-04-01-02" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="hero">
+        <p class="eyebrow">Spring Ball</p>
+        <p class="hero__brand">Timpview Football</p>
+        <h1>Spring Ball</h1>
+        <p class="hero__lede">
+          Built for coaches to stay current on the spring schedule and the
+          details of each practice day.
+        </p>
+
+        <div class="top-tabs" id="top-tabs">
+          <button class="is-active" data-view="visits" type="button">Schedule</button>
+          <button data-view="coach" type="button">Practice Details</button>
+        </div>
+      </header>
+
+      <main class="main-stack">
+        <section class="panel" id="visits-view">
+          <div class="visits-poster">
+            <div class="visits-poster__hero">
+              <div>
+                <p class="eyebrow">Timpview Football</p>
+                <h2>Spring Ball Schedule</h2>
+                <p class="visits-poster__schools">
+                  All practices, lifts, and the Showcase will be held at Timpview High School.
+                </p>
+              </div>
+            </div>
+
+            <div class="visits-months" id="visits-grid"></div>
+
+            <p class="visits-poster__note">Dates and times are subject to change.</p>
+          </div>
+        </section>
+
+        <section class="panel is-hidden" id="coach-view">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Practice Details</p>
+              <h2>Daily Breakdown</h2>
+            </div>
+          </div>
+
+          <div class="coach-subtabs" id="coach-subtabs">
+            <button data-coach-view="day" type="button">Day View</button>
+            <button class="is-active" data-coach-view="position" type="button">Position View</button>
+            <button data-coach-view="scripts" type="button">Scripts</button>
+          </div>
+
+          <div class="coach-layout">
+            <aside class="coach-days" id="day-list"></aside>
+            <div class="coach-detail">
+              <div class="detail-header" id="detail-header"></div>
+              <div class="note-row" id="note-row"></div>
+              <section id="coach-day-pane">
+                <div class="day-view-tabs" id="day-view-tabs">
+                  <button class="is-active" data-day-view="team" type="button">Team</button>
+                  <button data-day-view="offense" type="button">Offense</button>
+                  <button data-day-view="defense" type="button">Defense</button>
+                </div>
+                <div class="view-toolbar" id="day-view-toolbar"></div>
+                <div class="timeline" id="timeline"></div>
+              </section>
+
+              <section class="is-hidden" id="coach-position-pane">
+                <div class="position-summary" id="position-summary"></div>
+                <div class="position-board" id="position-board"></div>
+              </section>
+
+              <section class="is-hidden" id="coach-scripts-pane">
+                <div class="script-board" id="script-board"></div>
+              </section>
+
+              <section class="is-hidden" id="coach-editor-pane">
+                <div class="editor-subtabs" id="editor-subtabs">
+                  <button class="is-active" data-editor-view="blocks" type="button">Edit Day Blocks</button>
+                  <button data-editor-view="scripts" type="button">Edit Scripts</button>
+                </div>
+
+                <div id="block-editor-panel">
+                  <form class="admin-form" id="day-form">
+                    <label>
+                      Date label
+                      <input id="day-date-label" name="dateLabel" type="text" />
+                    </label>
+                    <label>
+                      Week
+                      <input id="day-week" name="week" type="number" min="1" />
+                    </label>
+                    <label>
+                      Day type
+                      <input id="day-type" name="dayType" type="text" />
+                    </label>
+                    <label class="admin-form__wide">
+                      Notes
+                      <textarea id="day-notes" name="notes" rows="3"></textarea>
+                    </label>
+                  </form>
+
+                  <div class="admin-toolbar">
+                    <button class="button button--solid" id="save-day" type="button">Save Day</button>
+                    <button class="button button--ghost" id="add-row" type="button">Add Row</button>
+                    <button class="button button--ghost" id="add-day" type="button">Add Day</button>
+                    <button class="button button--ghost" id="delete-day" type="button">Delete Day</button>
+                  </div>
+
+                  <div class="editor-table-wrap">
+                    <table class="editor-table">
+                      <thead>
+                        <tr>
+                          <th>Per</th>
+                          <th>Time</th>
+                          <th>Activity</th>
+                          <th>Duration</th>
+                          <th>Groups</th>
+                          <th></th>
+                        </tr>
+                      </thead>
+                      <tbody id="editor-rows"></tbody>
+                    </table>
+                  </div>
+                </div>
+
+                <div class="is-hidden" id="script-editor-panel">
+                  <div class="admin-toolbar">
+                    <button class="button button--solid" id="save-scripts" type="button">Save Scripts</button>
+                    <button class="button button--ghost" id="add-script" type="button">Add Script</button>
+                  </div>
+                  <div class="script-editor-list" id="script-editor-list"></div>
+                </div>
+
+                <div class="import-export">
+                  <label class="file-input">
+                    <span>Import CSV</span>
+                    <input id="csv-import" type="file" accept=".csv,text/csv" />
+                  </label>
+                  <label class="file-input">
+                    <span>Import JSON</span>
+                    <input id="json-import" type="file" accept=".json,application/json" />
+                  </label>
+                  <button class="button button--ghost" id="export-json" type="button">Export JSON</button>
+                  <button class="button button--ghost" id="reset-data" type="button">Reset to Original</button>
+                </div>
+
+                <p class="status-message" id="status-message"></p>
+              </section>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="schedule-data.js?v=2026-04-22-01"></script>
+    <script src="script.js?v=2026-04-22-01"></script>
+  </body>
+</html>
